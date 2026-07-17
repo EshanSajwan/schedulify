@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import StatCard from "../../components/dashboard/StatCard";
 import { CalendarDays } from "lucide-react";
-import { getDashboardStats } from "../../api/dashboardApi";
+import { getDashboardStats } from "../../api/DashboardApi";
 import {
     Users,
     BookOpen,
