@@ -10,7 +10,7 @@ import {
     Users
 } from "lucide-react";
 
-import { getAllClassGroups } from "../../api/ClassGroupApi";
+import { getAllClassGroups } from "../../api/classGroupApi";
 import { createStudent } from "../../api/StudentApi";
 
 function Register() {
