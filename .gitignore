@@ -1,0 +1,58 @@
+# =========================
+# IntelliJ IDEA
+# =========================
+
+.idea/
+*.iml
+*.iws
+*.ipr
+
+
+# =========================
+# Spring Boot / Maven
+# =========================
+
+**/target/
+
+# Maven wrapper generated jar
+**/.mvn/wrapper/maven-wrapper.jar
+
+
+# =========================
+# Frontend - React / Vite
+# =========================
+
+**/node_modules/
+**/dist/
+
+
+# =========================
+# Environment files
+# =========================
+
+.env
+.env.*
+!.env.example
+
+
+# =========================
+# Backend secrets
+# =========================
+
+BACKEND/src/main/resources/application.properties
+BACKEND/src/main/resources/application.yml
+
+
+# =========================
+# VS Code
+# =========================
+
+.vscode/
+
+
+# =========================
+# Operating System
+# =========================
+
+.DS_Store
+Thumbs.db
