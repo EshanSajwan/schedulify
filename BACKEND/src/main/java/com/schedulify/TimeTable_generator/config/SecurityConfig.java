@@ -97,9 +97,9 @@ public class SecurityConfig {
 
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(List.of(
+        configuration.setAllowedOriginPatterns(List.of(
                 "http://localhost:5173",
-                "https://schedulify-psi.vercel.app"
+                "https://*.vercel.app"
         ));
 
         configuration.setAllowedMethods(List.of(
@@ -107,7 +107,6 @@ public class SecurityConfig {
         ));
 
         configuration.setAllowedHeaders(List.of("*"));
-
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source =
