@@ -1,5 +1,6 @@
 package com.schedulify.TimeTable_generator.serviceImp;
 
+import ai.timefold.solver.core.api.score.HardSoftScore;
 import ai.timefold.solver.core.api.solver.SolverJob;
 import ai.timefold.solver.core.api.solver.SolverManager;
 import com.schedulify.TimeTable_generator.dto.TimeTableResponse;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -28,32 +30,26 @@ import java.util.concurrent.ExecutionException;
 public class TimeTableSolverServiceImp implements TimeTableSolverService {
 
     private final TimeTableDataBuilder timeTableDataBuilder;
-
     private final SolverManager<TimeTable> solverManager;
-
     private final TimeTableRunRepository timeTableRunRepo;
-
     private final TimeTableEntryRepository timeTableEntryRepo;
-
     private final TimeTableMapper  timeTableMapper;
-
     private final TeacherRepository teacherRepo;
     private final SubjectsRepository subjectsRepo;
     private final RoomsRepository roomsRepo;
     private final ClassGroupRepository classGroupRepo;
-
     private final UserRepository userRepo;
 
 
     @Override
     public TimeTable solve() throws ExecutionException, InterruptedException {
+
         TimeTable timeTable = timeTableDataBuilder.build();
-        SolverJob<TimeTable> job = solverManager.solve(1L , timeTable);
+        Long problemId = System.nanoTime();
+        SolverJob<TimeTable> job =
+                solverManager.solve(problemId, timeTable);
         TimeTable solved = job.getFinalBestSolution();
 
-        System.out.println("========== SOLVED SCORE ==========");
-        System.out.println(solved.getScore());
-        System.out.println("==================================");
 
         TimeTableRun timeTableRun = TimeTableRun
                 .builder()
@@ -62,7 +58,26 @@ public class TimeTableSolverServiceImp implements TimeTableSolverService {
                 .status(RunStatus.DRAFT)
                 .build();
 
+        Optional<TimeTableRun> activeRun =
+                timeTableRunRepo.findByStatus(RunStatus.ACTIVE);
 
+
+        if(activeRun.isEmpty()){
+            timeTableRun.setStatus(RunStatus.ACTIVE);
+        }
+        else{
+            HardSoftScore newScore =
+                    HardSoftScore.parseScore(solved.getScore().toString());
+
+            HardSoftScore oldScore =
+                    HardSoftScore.parseScore(activeRun.get().getScore());
+
+            if(newScore.compareTo(oldScore) >= 0){
+                activeRun.get().setStatus(RunStatus.ARCHIVED);
+                timeTableRunRepo.save(activeRun.get());
+                timeTableRun.setStatus(RunStatus.ACTIVE);
+            }
+        }
 
         timeTableRun = timeTableRunRepo.save(timeTableRun);
 

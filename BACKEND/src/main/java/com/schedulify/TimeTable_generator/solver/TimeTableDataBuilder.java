@@ -21,30 +21,10 @@ public class TimeTableDataBuilder {
     private final FacultyPreferenceRepository facultyPreferenceRepo;
 
     public TimeTable build() {
+
         List<Room> rooms = roomsRepo.findAll();
         List<TimeSlot> timeSlots  = timeSlotsRepo.findAll();
         List<TimeTableEntry> timeTableEntries = buildEntries(teachingAssignmentRepo.findAll());
-
-//        return TimeTable.builder() /////// ye mera hai/////
-//                .rooms(rooms)
-//                .timeSlots(timeSlots)
-//                .timeTableEntries(timeTableEntries)
-//                .availability(teacherAvailabilityRepo.findAll())
-//                .facultyPreferences(facultyPreferenceRepo.findAll())
-//                .build();
-
-        List<TeachingAssignment> assignments =
-                teachingAssignmentRepo.findAll();
-        System.out.println("========== DATA CHECK ==========");
-        System.out.println("Rooms: " + rooms.size());
-        System.out.println("Time Slots: " + timeSlots.size());
-        System.out.println("Teaching Assignments: " + assignments.size());
-        System.out.println("Generated Lectures: " + timeTableEntries.size());
-        System.out.println("Availability Records: "
-                + teacherAvailabilityRepo.count());
-        System.out.println("Preference Records: "
-                + facultyPreferenceRepo.count());
-        System.out.println("===============================");
 
         return TimeTable.builder()
                 .rooms(rooms)
