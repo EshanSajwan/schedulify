@@ -76,6 +76,14 @@ public class SecurityConfig {
                         .requestMatchers("/api/students/**")
                         .hasRole("ADMIN")
 
+                        .requestMatchers("/api/teacher/**").hasRole("ADMIN")
+                        .requestMatchers("/api/subject/**").hasRole("ADMIN")
+                        .requestMatchers("/api/rooms/**").hasRole("ADMIN")
+                        .requestMatchers("/api/class-group/**").hasRole("ADMIN")
+                        .requestMatchers("/api/time-slot/**").hasRole("ADMIN")
+                        .requestMatchers("/api/teaching-assignment/**").hasRole("ADMIN")
+                        .requestMatchers("/api/dashboard/**").hasRole("ADMIN")
+
                         .anyRequest()
                         .authenticated()
                 )
