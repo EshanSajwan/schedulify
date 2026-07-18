@@ -12,14 +12,14 @@ export const getRuns = async () => {
 
 export const exportExcel = (runId) => {
     window.open(
-        `http://localhost:8080/api/timetable/export/excel/${runId}`,
+        `https://schedulify-elfv.onrender.com/api/timetable/export/excel/${runId}`,
         "_blank"
     );
 };
 
 export const exportPdf = (runId) => {
     window.open(
-        `http://localhost:8080/api/timetable/export/pdf/${runId}`,
+        `https://schedulify-elfv.onrender.com/api/timetable/export/pdf/${runId}`,
         "_blank"
     );
 };

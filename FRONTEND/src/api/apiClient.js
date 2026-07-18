@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-    baseURL: "http://localhost:8080/api",
+baseURL: "https://schedulify-elfv.onrender.com/api",
 });
 
 apiClient.interceptors.request.use((config) => {
