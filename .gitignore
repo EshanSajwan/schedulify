@@ -39,7 +39,7 @@
 # Backend secrets
 # =========================
 
-BACKEND/src/main/resources/application.properties
+BACKEND/src/main/resources/application-example.properties
 BACKEND/src/main/resources/application.yml
 
 
